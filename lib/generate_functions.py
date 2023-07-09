@@ -58,8 +58,16 @@ def fix_enums(arg_name, arg_type, func_name):
                 arg_type = "MouseButton"
         elif arg_name == "mode" and func_name == "UpdateCamera":
             arg_type = "CameraMode"
+        elif arg_name == "state" and func_name == "GuiSetState":
+            arg_type = "GuiState"
+        elif func_name == "GuiSetStyle" or func_name == "GuiGetStyle":
+            if arg_name == "control":
+                arg_type = "GuiControl"
+            elif arg_name == "property":
+                arg_type = "GuiControlProperty"
         elif arg_name == "gesture":
             arg_type = "Gestures"
+
     return arg_type
 
 
@@ -165,4 +173,11 @@ if __name__ == "__main__":
         "raylib-zig-math.zig",
         "RMAPI ",
         "raylib-zig-math-prelude.zig",
+    )
+
+    parse_header(
+        "../raylib/examples/shapes/raygui.h",
+        "raylib-zig-gui.zig",
+        "RAYGUIAPI ",
+        "raylib-zig-gui-prelude.zig",
     )

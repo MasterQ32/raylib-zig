@@ -83,6 +83,15 @@ pub fn build(b: *std.Build) void {
         },
     });
 
+    const raylib_gui_mod = b.addModule("raylib.gui", .{
+        .source_file = .{ .path = "lib/raylib-zig-gui.zig" },
+        .dependencies = &.{
+            .{ .name = "raylib.core", .module = raylib_core_mod },
+        },
+    });
+
+    _ = raylib_gui_mod;
+
     const examples = [_]Program{
         .{
             .name = "basic_window",
