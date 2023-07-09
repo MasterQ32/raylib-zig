@@ -1,6 +1,6 @@
 // raylib-zig (c) Nikolas Wipper 2023
 
-const rl = @import("raylib.math");
+const rl = @import("raylib.core");
 
 const Matrix = rl.Matrix;
 const Quaternion = rl.Quaternion;
@@ -17,20 +17,20 @@ pub const GuiStyleProp = extern struct {
     propertyValue: c_uint,
 };
 
-pub const GuiState = enum(c_uint) {
+pub const GuiState = enum(c_int) {
     STATE_NORMAL = 0,
     STATE_FOCUSED = 1,
     STATE_PRESSED = 2,
     STATE_DISABLED = 3,
 };
 
-pub const GuiTextAlignment = enum(c_uint) {
+pub const GuiTextAlignment = enum(c_int) {
     TEXT_ALIGN_LEFT = 0,
     TEXT_ALIGN_CENTER = 1,
     TEXT_ALIGN_RIGHT = 2,
 };
 
-pub const GuiControl = enum(c_uint) {
+pub const GuiControl = enum(c_int) {
     // Default -> populates to all controls when set
     DEFAULT = 0,
 
@@ -54,7 +54,7 @@ pub const GuiControl = enum(c_uint) {
 
 /// Gui base properties for every control
 /// NOTE: RAYGUI_MAX_PROPS_BASE properties (by default 16 properties)
-pub const GuiControlProperty = enum(c_uint) {
+pub const GuiControlProperty = enum(c_int) {
     BORDER_COLOR_NORMAL = 0,
     BASE_COLOR_NORMAL = 1,
     TEXT_COLOR_NORMAL = 2,
@@ -71,31 +71,32 @@ pub const GuiControlProperty = enum(c_uint) {
     TEXT_PADDING = 13,
     TEXT_ALIGNMENT = 14,
     RESERVED = 15,
+    _,
 };
 
 /// DEFAULT extended properties
 /// NOTE: Those properties are common to all controls or global
-pub const GuiDefaultProperty = enum(c_uint) {
+pub const GuiDefaultProperty = enum(c_int) {
     TEXT_SIZE = 16,
     TEXT_SPACING = 17,
     LINE_COLOR = 18,
     BACKGROUND_COLOR = 19,
 };
 
-pub const GuiToggleProperty = enum(c_uint) {
+pub const GuiToggleProperty = enum(c_int) {
     GROUP_PADDING = 16,
 };
 
-pub const GuiSliderProperty = enum(c_uint) {
+pub const GuiSliderProperty = enum(c_int) {
     SLIDER_WIDTH = 16,
     SLIDER_PADDING = 17,
 };
 
-pub const GuiProgressBarProperty = enum(c_uint) {
+pub const GuiProgressBarProperty = enum(c_int) {
     PROGRESS_PADDING = 16,
 };
 
-pub const GuiScrollBarProperty = enum(c_uint) {
+pub const GuiScrollBarProperty = enum(c_int) {
     ARROWS_SIZE = 16,
     ARROWS_VISIBLE = 17,
     SCROLL_SLIDER_PADDING = 18,
@@ -104,21 +105,21 @@ pub const GuiScrollBarProperty = enum(c_uint) {
     SCROLL_SPEED = 21,
 };
 
-pub const GuiCheckBoxProperty = enum(c_uint) {
+pub const GuiCheckBoxProperty = enum(c_int) {
     CHECK_PADDING = 16,
 };
 
-pub const GuiComboBoxProperty = enum(c_uint) {
+pub const GuiComboBoxProperty = enum(c_int) {
     COMBO_BUTTON_WIDTH = 16,
     COMBO_BUTTON_SPACING = 17,
 };
 
-pub const GuiDropdownBoxProperty = enum(c_uint) {
+pub const GuiDropdownBoxProperty = enum(c_int) {
     ARROW_PADDING = 16,
     DROPDOWN_ITEMS_SPACING = 17,
 };
 
-pub const GuiTextBoxProperty = enum(c_uint) {
+pub const GuiTextBoxProperty = enum(c_int) {
     TEXT_INNER_PADDING = 16,
     TEXT_LINES_SPACING = 17,
     TEXT_ALIGNMENT_VERTICAL = 18,
@@ -126,18 +127,18 @@ pub const GuiTextBoxProperty = enum(c_uint) {
     TEXT_WRAP_MODE = 20,
 };
 
-pub const GuiListViewProperty = enum(c_uint) {
+pub const GuiListViewProperty = enum(c_int) {
     SPIN_BUTTON_WIDTH = 16,
     SPIN_BUTTON_SPACING = 17,
 };
-pub const GuiSpinnerProperty = enum(c_uint) {
+pub const GuiSpinnerProperty = enum(c_int) {
     LIST_ITEMS_HEIGHT = 16,
     LIST_ITEMS_SPACING = 17,
     SCROLLBAR_WIDTH = 18,
     SCROLLBAR_SIDE = 19,
 };
 
-pub const GuiColorPickerProperty = enum(c_uint) {
+pub const GuiColorPickerProperty = enum(c_int) {
     COLOR_SELECTOR_SIZE = 16,
     HUEBAR_WIDTH = 17,
     HUEBAR_PADDING = 18,
@@ -158,8 +159,8 @@ pub extern fn GuiSetState(state: GuiState) void;
 pub extern fn GuiGetState() c_int;
 pub extern fn GuiSetFont(font: Font) void;
 pub extern fn GuiGetFont() Font;
-pub extern fn GuiSetStyle(control: GuiControl, property: c_int, value: c_int) void;
-pub extern fn GuiGetStyle(control: GuiControl, property: c_int) c_int;
+pub extern fn GuiSetStyle(control: GuiControl, property: GuiControlProperty, value: c_int) void;
+pub extern fn GuiGetStyle(control: GuiControl, property: GuiControlProperty) c_int;
 pub extern fn GuiLoadStyle(fileName: [*c]const u8) void;
 pub extern fn GuiLoadStyleDefault() void;
 pub extern fn GuiEnableTooltip() void;

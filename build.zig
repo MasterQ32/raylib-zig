@@ -72,6 +72,16 @@ pub fn build(b: *std.Build) void {
     const raylib_lib = raylib_dep.artifact("raylib");
     b.installArtifact(raylib_lib);
 
+    const raygui_lib = b.addStaticLibrary(.{
+        .name = "raygui",
+        .optimize = optimize,
+        .target = target,
+    });
+    raygui_lib.want_lto = false;
+    raygui_lib.addCSourceFile("lib/raygui.c", &.{"-DRAYGUI_IMPLEMENTATION"});
+    raygui_lib.linkLibrary(raylib_lib);
+    b.installArtifact(raygui_lib);
+
     const raylib_core_mod = b.addModule("raylib.core", .{
         .source_file = .{ .path = "lib/raylib-zig.zig" },
     });

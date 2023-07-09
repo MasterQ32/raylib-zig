@@ -1,6 +1,6 @@
 // raylib-zig (c) Nikolas Wipper 2023
 
-const rl = @import("raylib.math");
+const rl = @import("raylib.core");
 
 const Matrix = rl.Matrix;
 const Quaternion = rl.Quaternion;
